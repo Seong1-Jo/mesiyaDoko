@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Shop from "./component/Shop";
 
 const API_one = ""; //API
 
@@ -58,12 +59,13 @@ function App() {
             현재위치는 위도 : {latitude} 경도 : {longitude} 입니다
           </h1>
         ) : (
-          name.map((x) => (
-            <div key={x.id}>
-              <h2>{x.name}</h2>
-              <p>{x.access}</p>
-              <img src={x.logo_image} />
-            </div> //목록
+          name.map((shop) => (
+            <Shop
+              key={shop.id}
+              thumbnailImage={shop.logo_image}
+              shopName={shop.name}
+              shopAccess
+            />
           ))
         )}
       </div>
