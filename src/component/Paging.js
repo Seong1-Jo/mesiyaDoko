@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Pagination from "react-js-pagination";
 
-import { useState } from "react";
-
 const PaginationBox = styled.div`
   .pagination {
     display: flex;
@@ -51,14 +49,15 @@ const PaginationBox = styled.div`
     color: #337ab7;
   }
 `;
+// 참고:
 
 const Paging = ({ totalCount, page, handlePageChange }) => {
-  const handlePageChange2 = (e) => {
+  const handlePagingChange = (e) => {
     // setPage(page);
-    console.log("페이징");
-    console.log("수", typeof totalCount);
-    console.log("페이징함수", e);
+    // console.log("수", typeof totalCount);
+    // console.log("페이징함수", e);
     handlePageChange(e);
+    console.log("페이지 리셋", page);
   };
 
   return (
@@ -70,7 +69,7 @@ const Paging = ({ totalCount, page, handlePageChange }) => {
         pageRangeDisplayed={5} //표시할 페이지수
         prevPageText={"‹"}
         nextPageText={"›"}
-        onChange={handlePageChange2}
+        onChange={handlePagingChange}
       />
     </PaginationBox>
   );
