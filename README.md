@@ -6,6 +6,10 @@
 
 ## 開発環境
 
+### 環境設定
+
+- npm install
+
 ### 対象 OS およびブラウザ(ver.含む)
 
 - Windows10
@@ -18,7 +22,14 @@
 
 ### フレームワーク(ver.含む)
 
-- React ver 18.2.0
+- React(ver 18.2.0)(ライブラリー)
+
+#### React ライブラリー(package.json)
+
+- axios(ver 1.1.3)
+- react-js-pagination(ver 3.0.3)
+- react-router-dom(ver 6.4.3)
+- styled-components(ver 5.3.6)
 
 ### API
 
@@ -94,3 +105,7 @@ Geolocation API を利用して npm start 実行時、
 - localhost のようなローカルサーバードメインで動作
 - http:// プロトコル環境では Geolocation API 不動作
   http:// ではなく https:// 必要
+
+#### テーブル定義(ER 図)などの設計ドキュメント
+
+![ERD](./public/ERD.JPG)
