@@ -35,13 +35,11 @@ function ShopList() {
         `/hotpepper/gourmet/v1/?key=6512a79e28669890&lat=${latitude}&lng=${longitude}&range=${range}&order=4&count=100&format=json`
       )
       .then((response) => {
+        console.log("asdsd", response);
         if (response.data.results.error) {
           alert("その位置では見つかりません。");
         }
         setShopArray(response.data.results.shop);
-      })
-      .catch((error) => {
-        console.log("error", error);
       });
   };
   const handlePageChange = (e) => {
