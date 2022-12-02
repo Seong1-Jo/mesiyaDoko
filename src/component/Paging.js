@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Pagination from "react-js-pagination";
 
+/* STYLE(CSS)*/
+
 const PaginationBox = styled.div`
   .pagination {
     display: flex;
@@ -49,24 +51,20 @@ const PaginationBox = styled.div`
     color: #337ab7;
   }
 `;
-// 참고:
+// 出所: https://cotak.tistory.com/112
 
 const Paging = ({ totalCount, page, handlePageChange }) => {
   const handlePagingChange = (e) => {
-    // setPage(page);
-    // console.log("수", typeof totalCount);
-    // console.log("페이징함수", e);
     handlePageChange(e);
-    console.log("페이지 리셋", page);
   };
 
   return (
     <PaginationBox>
       <Pagination
-        activePage={page} //현재 보고있는 페이지
-        itemsCountPerPage={6} //페이지에 출력할 아이템수
-        totalItemsCount={totalCount} // 총 아이템수
-        pageRangeDisplayed={5} //표시할 페이지수
+        activePage={page} // 現在見ている Page
+        itemsCountPerPage={6} // Pageに出力するItem数
+        totalItemsCount={totalCount} // 総Item数
+        pageRangeDisplayed={5} // 表示するPage数
         prevPageText={"‹"}
         nextPageText={"›"}
         onChange={handlePagingChange}

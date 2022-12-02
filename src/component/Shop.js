@@ -1,22 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Link } from "react-router-dom";
-import { Container, LinkRouter } from "../style/Common";
+import { LinkRouter } from "../style/Common";
 
-/* styled-components */
+/* STYLE(CSS)*/
+
 const ShopDiv = styled.div`
   border: 2px solid #a9a9a9;
   border-radius: 7px;
-  /* border: 2px solid green; */
   display: flex;
   margin: 0 auto;
   margin-top: 10px;
   padding: 15px;
   position: relative;
   width: 600px;
-  /* width: 50%; */
-  /* flex: 1 1 28%; */
   &:hover {
     border: 2px solid #ff0000;
   }
@@ -26,7 +23,6 @@ const ShopDiv = styled.div`
   }
 `;
 const ColDiv = styled.div`
-  /* border: 1px solid black; */
   width: 30%;
   @media screen and (max-width: 480px) {
     //Phone

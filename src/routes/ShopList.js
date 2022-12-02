@@ -2,89 +2,74 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
-
 import Shop from "../component/Shop";
 import Paging from "../component/Paging";
+
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container } from "../style/Common";
 
-const ShopDiv = styled.div`
-  /* border: 3px solid black; */
+/* STYLE(CSS) */
+const BackBtn = styled.button`
+  display: none;
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
+  @media screen and (max-width: 480px) {
+  }
 `;
+const ShopDiv = styled.div``;
 
 function ShopList() {
+  const showItems = 5; //Item数
+  const navigate = useNavigate();
   const { range } = useParams();
-  const navigate = useNavigate(); //뒤로가기
-  console.log("이거뭘까", range);
-  // const [loading, setLoading] = useState(false);
-  const [latitude, setLatitude] = useState(""); //緯度(위도) state
-  const [longitude, setLongitude] = useState(""); //経度(경도)
-  const [name, setName] = useState([]); // Shop情報API
+  const [latitude, setLatitude] = useState(""); //緯度 state
+  const [longitude, setLongitude] = useState(""); //経度 state
+  const [shopArray, setShopArray] = useState([]); // Shop情報API
+  const [page, setPage] = useState(1); //Paging
 
-  // const Lat = 35.67067982434782;
-  // const Lng = 139.76977469231642;
-
-  const items = 5; //shopList 개수
-  // const [items, setItems] = useState(5); //Item
-  const [page, setPage] = useState(1);
-
-  const handlePageChange = (e) => {
-    console.log("부모컴포넌트 함수출력", e);
-    setPage(e);
-  };
-  //asyan await으로 나중에할수있을때 하기 lat=34.67&lng=135.52
   const getNames = () => {
-    console.log("실행3", latitude);
-    console.log("여기확인1", latitude);
-    axios
+    axios //HTTP非同期通信ライブラリ(ホットペッパーグルメ検索API)
       .get(
-        //35.682854739782115, 139.7250405815352
-        // `/hotpepper/gourmet/v1/?key=6512a79e28669890&lat=${latitude}&lng=${longitude}&range=${rangeClick}&order=4&format=json`
-        `/hotpepper/gourmet/v1/?key=6512a79e28669890&lat=35.67067982434782&lng=139.76977469231642&range=${range}&order=4&count=100&format=json`
+        `/hotpepper/gourmet/v1/?key=6512a79e28669890&lat=${latitude}&lng=${longitude}&range=${range}&order=4&count=100&format=json`
       )
       .then((response) => {
-        console.log("샵이름", response.data.results);
-        setName(response.data.results.shop);
+        if (response.data.results.error) {
+          alert("その位置では見つかりません。");
+        }
+        setShopArray(response.data.results.shop);
+      })
+      .catch((error) => {
+        console.log("error", error);
       });
   };
-  //현재위치를 가져오면서 api의 현재위치 함수 실행
-  console.log("이곳에옵니가?", latitude);
+  const handlePageChange = (e) => {
+    // Paging HandleFunction
+    setPage(e);
+  };
   useEffect(() => {
+    // Geolocation API
     navigator.geolocation.getCurrentPosition((position) => {
-      //現在位置
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
-      // setLatitude(Lat);
-      // setLongitude(Lng);
-      console.log("유즈effect", latitude);
     });
     getNames();
-    console.log("유즈ef");
-    setPage(1); //페이지 이동시 페이징 리셋
+    // setPage(1);
   }, [latitude, longitude, range]);
-
-  console.log("name", name);
 
   return (
     <Container>
-      <button
+      <BackBtn
         onClick={() => {
-          navigate(-1);
+          navigate("/");
         }}
       >
-        뒤로가기
-      </button>
+        BACK
+      </BackBtn>
       <ShopDiv>
-        {console.log(
-          "아이템, 페이지",
-          page,
-          items,
-          items * (page - 1),
-          items * (page - 1) + items
-        )}
-        {name
-          .slice(items * (page - 1), items * (page - 1) + items)
+        {shopArray
+          .slice(showItems * (page - 1), showItems * (page - 1) + showItems)
           .map((shop) => (
             <Shop
               key={shop.id}
@@ -94,15 +79,11 @@ function ShopList() {
               shopAccess={shop.access}
             />
           ))}
-        {/* PAGING */}
-        <div>
-          {console.log("확인1page", page, "확인name", name.length)}
-          <Paging
-            totalCount={Number(name.length)}
-            page={page}
-            handlePageChange={handlePageChange}
-          />
-        </div>
+        <Paging
+          totalCount={Number(shopArray.length)}
+          page={page}
+          handlePageChange={handlePageChange}
+        />
       </ShopDiv>
     </Container>
   );
