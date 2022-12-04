@@ -29,11 +29,11 @@ const ColDiv = styled.div`
     width: 20%;
   }
 `;
-
 const ShopImage = styled.img`
   width: 100%;
   height: 120px;
   @media screen and (max-width: 480px) {
+    //Phone
     height: 50px;
   }
 `;

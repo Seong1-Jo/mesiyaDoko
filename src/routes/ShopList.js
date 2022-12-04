@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
-
 import Shop from "../component/Shop";
 import Paging from "../component/Paging";
 
@@ -13,12 +12,10 @@ import { Container } from "../style/Common";
 const BackBtn = styled.button`
   display: none;
   @media screen and (max-width: 768px) {
+    //Tablet, Phone
     display: block;
   }
-  @media screen and (max-width: 480px) {
-  }
 `;
-const ShopDiv = styled.div``;
 
 function ShopList() {
   const showItems = 5; //Item数
@@ -33,10 +30,13 @@ function ShopList() {
     axios //HTTP非同期通信ライブラリ(ホットペッパーグルメ検索API)
       .get(
         `/hotpepper/gourmet/v1/?key=6512a79e28669890&lat=${latitude}&lng=${longitude}&range=${range}&order=4&count=100&format=json`
-      )
+      ) // 日本の緯度、経度使用(韓国GPS(緯度、経度)利用不可)lat = 34.67 lng = 135.52
       .then((response) => {
-        console.log("asdsd", response);
-        if (response.data.results.error) {
+        console.log("state", response);
+        if (
+          response.data.results.error ||
+          response.data.results.shop.length === 0
+        ) {
           alert("その位置では見つかりません。");
         }
         setShopArray(response.data.results.shop);
@@ -52,8 +52,10 @@ function ShopList() {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
     });
-    getNames();
-    // setPage(1);
+    if ((latitude || longitude) !== "") {
+      getNames();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latitude, longitude, range]);
 
   return (
@@ -65,7 +67,7 @@ function ShopList() {
       >
         BACK
       </BackBtn>
-      <ShopDiv>
+      <div>
         {shopArray
           .slice(showItems * (page - 1), showItems * (page - 1) + showItems)
           .map((shop) => (
@@ -82,7 +84,7 @@ function ShopList() {
           page={page}
           handlePageChange={handlePageChange}
         />
-      </ShopDiv>
+      </div>
     </Container>
   );
 }

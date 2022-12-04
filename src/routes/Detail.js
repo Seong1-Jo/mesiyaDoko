@@ -10,9 +10,8 @@ import { Container, RowDiv } from "../style/Common";
 const BackBtn = styled.button`
   display: none;
   @media screen and (max-width: 768px) {
+    //Tablet, Phone
     display: block;
-  }
-  @media screen and (max-width: 480px) {
   }
 `;
 const DetailShopImage = styled.img`
@@ -31,7 +30,7 @@ const DetailShopImage = styled.img`
 const DetailShopInformation = styled.div`
   width: 70%;
   @media screen and (max-width: 768px) {
-    //Tablet
+    //Tablet, Phone
     width: 100%;
   }
 `;
@@ -48,9 +47,6 @@ const ShopDetail = styled.div`
     font-size: 14px;
   }
 `;
-const ShopAdress = styled.p``;
-const ShopOpen = styled.p``;
-const ShopClose = styled.p``;
 
 function Detail() {
   const { id } = useParams(); // path値
@@ -79,9 +75,9 @@ function Detail() {
         <DetailShopInformation>
           <ShopName>{detailShop.name}</ShopName>
           <ShopDetail>
-            <ShopAdress>住所:{detailShop.address}</ShopAdress>
-            <ShopOpen>営業時間:{detailShop.open}</ShopOpen>
-            <ShopClose>定休日:{detailShop.close}</ShopClose>
+            <p>住所:{detailShop.address}</p>
+            <p>営業時間:{detailShop.open}</p>
+            <p>定休日:{detailShop.close}</p>
           </ShopDetail>
         </DetailShopInformation>
       </RowDiv>

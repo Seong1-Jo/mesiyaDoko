@@ -8,7 +8,7 @@ import { Container, LinkRouter, RowDiv } from "../style/Common";
 const ColDiv = styled.div`
   width: 50%;
   @media screen and (max-width: 768px) {
-    //Tablet
+    //Tablet, Phone
     width: 100%;
   }
 `;
@@ -42,10 +42,6 @@ const RangeLi = styled.li`
   }
 `;
 
-const Span = styled.span`
-  border: 1px solid black;
-`;
-
 /* JSX */
 function Main() {
   return (
@@ -59,9 +55,7 @@ function Main() {
         <ColDiv>
           <RangeUl>
             <LinkRouter to={`/${1}`}>
-              <RangeLi>
-                <Span>300M</Span>
-              </RangeLi>
+              <RangeLi>300M</RangeLi>
             </LinkRouter>
             <LinkRouter to={`/${2}`}>
               <RangeLi>500M</RangeLi>
